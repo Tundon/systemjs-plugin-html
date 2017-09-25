@@ -71,10 +71,6 @@ module.exports = function bundle(loads, opts) {
     return '<link rel="import" href="' + fromFileURL(load.address) + '">';
   }).join('\n');
 
-  var stubDefines = loads.map(function (load) {
-    return "System\.register('" + load.name + "', [], false, function() {});";
-  }).join('\n');
-
   return new Promise(function (resolve, reject) {
     fs.writeFileSync(outFile, output);
     console.log('     Vulcanizing ', outFile);
@@ -86,7 +82,7 @@ module.exports = function bundle(loads, opts) {
       // minimize.parse(output, function(error, output) {
         // if (error) { return reject(error); }
       fs.writeFileSync(outFile, output);
-      resolve(stubDefines);
+      resolve('');
       // });
     });
   });
